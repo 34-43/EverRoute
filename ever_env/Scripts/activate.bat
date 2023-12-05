@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=C:\Users\jehyu\Desktop\대학\23-2 수업\컴알실\에버랜드팀플\ever_env
+set VIRTUAL_ENV=C:\Users\3443\Documents\GitHub\EverRoute\ever_env
 
 if not defined PROMPT set PROMPT=$P$G
 
