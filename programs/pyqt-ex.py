@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QRadioButton, QPushButton, QGraphicsView, QGraphicsScene, QGraphicsEllipseItem
 import sys
-import bruteforce
 
 class MyWidget(QWidget):
     def __init__(self):
