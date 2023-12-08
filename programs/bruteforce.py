@@ -38,13 +38,17 @@ def create_enum(values):
 def make_days_2_date(days):
     return pd.to_datetime(days,unit='D',origin='1899-12-30')
 
-def get_await_time(df,wd,time,target):
+def get_await_time(df,datetime,target):
+    dt.datetime.today()
     pass
 
 def get_route_time(df,start,end):
     #row_of_start = first column's row index of start value
     row_of_start = df.iloc[:,1][df.iloc[:,1]==start].index.to_list()[0]
     return df.loc[row_of_start,end]
+
+def weekday_condition(row):
+    return make_days_2_date(row['날짜']).weekday() < 4
 
 #------ down : main ------
 
@@ -70,5 +74,9 @@ def main():
     print(get_route_time(df_route,'썬더폴스','우주전투기'))
     print(get_route_time(df_route,'사파리월드','플라잉레스큐'))
     print(make_days_2_date(45252))
+    print(make_days_2_date(45257))
+    print(make_days_2_date(45258))
+    # var = df_await[df_await.apply(weekday_condition,axis=1)]
+    # print(var)
 
 main()

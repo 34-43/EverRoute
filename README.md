@@ -1,5 +1,22 @@
 # brute-force 놀이기구 동선 알고리즘
 
+### 설치 Installation
+가상 환경 `venv(python3.11)`을 적절한 위치에 생성하고, requirements 파일을 이용하여 의존성 설치를 완료합니다.
+
+setup `venv(python3.11)` and use pip with requirements.txt to install dependencies.
+```shell
+python -m venv ever_env
+ever_env/Scripts/activate
+pip install -r requirements.txt
+```
+### 실행 execution
+programs 경로 내에 위치한 `bruteforce.py`안에 정의된 함수와 main을 통해 데이터를 추출하고 알고리즘을 동작할 수 있습니다.
+```
+python bruteforce.py
+```
+
+---
+### 알고리즘 개요
 핵심 키워드 : `지정 시간 내` `최다 탑승 목표` `인기순 최대 점수 목표` 
 
 
@@ -26,7 +43,7 @@
 사용할 에버랜드의 놀이기구 총 26 항목에 대한 절대적인 인기 순위를, 실제적인 데이터에 가깝도록 아래의 방법을 사용하여 지정하였습니다.
 
 #### 웹 검색 통계
-
+- 결과 1
 1. 에버랜드 티익스프레스
 2. 에버랜드허리케인
 3. 에버랜드 썬더폴스
@@ -36,8 +53,7 @@
 7. 에버랜드피터팬
 8. 에버랜드 더블락스핀
 
-
-
+- 결과 2
 1. 티익스프레스
 2. 로스트밸리
 3. 더블락스핀
