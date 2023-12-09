@@ -1,6 +1,5 @@
 import pandas as pd
 import os as os
-from enum import Enum, auto
 import datetime as dt
 
 raw_p = "raw"
@@ -32,51 +31,51 @@ def write_key(key_list):
     for key in key_list:
         file.write(key + "\n")
 
-def create_enum(values):
-    return Enum('',{value: auto() for value in values})
+
 
 def make_days_2_date(days):
-    return pd.to_datetime(days,unit='D',origin='1899-12-30')
+    return pd.to_datetime(days,unit='D',origin='1899-12-30').date()
 
-def get_await_time(df,datetime,target):
-    dt.datetime.today()
-    pass
+def is_wd_equal(date1,date2):
+    return date1.weekday() == date2.weekday()
+
+def get_wd_df(df,clock):
+    return df[df.apply(lambda row: is_wd_equal(make_days_2_date(row['날짜']),clock),axis=1)]
+
+def get_await_time(df,clock,target : str):
+    df_wd = get_wd_df(df,clock)
+    h = clock.hour
+    # if clock.minute < 30: h -= 1
+    if h < 10 or h >18: return -1
+    new = dt.time(hour=h,minute=30)
+    row_of_new = df_wd.iloc[:,2][df_wd.iloc[:,2]==str(new)].index.to_list()[0]
+    return df.loc[row_of_new,target]
 
 def get_route_time(df,start,end):
-    #row_of_start = first column's row index of start value
     row_of_start = df.iloc[:,1][df.iloc[:,1]==start].index.to_list()[0]
     return df.loc[row_of_start,end]
 
-def weekday_condition(row):
-    return make_days_2_date(row['날짜']).weekday() < 4
+def maximum_rides(df_aw,df_rt):
+    pass
 
 #------ down : main ------
 
 def main():
-    # toggle for reloading raw files
-    update = False
-    # parse & store excel
     csv_paths = get_csv_paths(sheets)
-    if update: make_excel_2_csv(excel_p,csv_paths)
-    # read from stored csv
     df_await = read_csv(csv_paths[0])
     df_route1 = read_csv(csv_paths[1])
     df_route2 = read_csv(csv_paths[2])
-    # parse & store key
     key_list = df_await.columns[3:].to_list()
+    # toggle for reloading raw files
+    update = False
+    if update: make_excel_2_csv(excel_p,csv_paths)
     if update: write_key(key_list)
-    # create enum
-    R = create_enum(key_list)
     # use -----------------------------------
-    # current using dataframe
     df_route = df_route2
-    print(get_route_time(df_route,'사파리월드','사파리월드'))
-    print(get_route_time(df_route,'썬더폴스','우주전투기'))
-    print(get_route_time(df_route,'사파리월드','플라잉레스큐'))
-    print(make_days_2_date(45252))
-    print(make_days_2_date(45257))
-    print(make_days_2_date(45258))
-    # var = df_await[df_await.apply(weekday_condition,axis=1)]
-    # print(var)
+    basetime = dt.datetime.today()
+
+    print(get_route_time(df_route,'사파리월드','릴리댄스'))
+    print(get_await_time(df_await,basetime,'슈팅고스트'))
+    print(get_await_time(df_await,dt.datetime(2023,11,23,16,00,0),'피터팬'))
 
 main()
