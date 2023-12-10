@@ -5,14 +5,56 @@
  SPDX-License-Identifier: Apache-2.0
 -->
 <html>
-  <head>
-    <title>Info Windows</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
-  </head>
-  <body>
-    <div id="map" style="height: 100%"></div>
-    <script src='https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&callback=initMap&v=weekly' defer></script>
-    <script src="{{url_for('static', filename="index.js")}}"></script>
-  </body>
+
+<head>
+	<title>Info Windows</title>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+
+<body>
+	<div id="map" style="height: 100%"></div>
+	<script src='https://maps.googleapis.com/maps/api/js?key={{MAPS_KEY}}&callback=initMap&v=weekly' defer></script>
+	<script>
+		function initMap() {
+			const ever_center = {'lat':37.2926168692307,'lng':127.195486853967,};
+
+			const map = new google.maps.Map(document.getElementById("map"), {
+				zoom: 4,
+				center: ever_center,
+			});
+
+			const contentString =
+				'<div id="content">' +
+				'<div id="siteNotice">' +
+				"</div>" +
+				'<h1 id="firstHeading" class="firstHeading">대기시간</h1>' +
+				'<div id="bodyContent">' +
+				'<div>{{content}}분</div>' +
+				"</div>" +
+				"</div>";
+
+			const infowindow = new google.maps.InfoWindow({
+				content: contentString,
+			});
+
+			const marker = new google.maps.Marker({
+				position: ever_center,
+				map,
+				title: "Uluru (Ayers Rock)",
+			});
+
+			marker.addListener("click", () => {
+				infowindow.open({
+					anchor: marker,
+					map,
+				});
+			});
+		}
+
+		window.initMap = initMap;
+	</script>
+	<!-- <script src="{{url_for('static', filename=" index.js")}}"></script> -->
+</body>
+
 </html>
